@@ -1,1 +1,4 @@
+click
+rich
 google-genai
+psycopg2-binary
