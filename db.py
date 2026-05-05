@@ -10,8 +10,9 @@ DB_CONFIG = {
     "password": "postgres"
 }
 
+
 class Database:
-    def _init_(self):
+    def __init__(self):
         self.conn = psycopg2.connect(**DB_CONFIG)
         self.conn.autocommit = True
         self._criar_tabela()
@@ -77,6 +78,7 @@ class Database:
         cursor.close()
         return registros
 
-    def _del_(self):
+    def __del__(self):
         if hasattr(self, 'conn') and self.conn:
             self.conn.close()
+set
