@@ -1,4 +1,4 @@
-# ShellMate 🐚
+# ShellMate 
 
 Terminal inteligente que traduz português em comandos de terminal usando IA.
 
@@ -102,6 +102,6 @@ shellmate/
 
 ## Funciona em
 
-- ✅ Windows (PowerShell)
-- ✅ Linux (Bash)
-- ✅ macOS (Bash/Zsh)
+-  Windows (PowerShell)
+-  Linux (Bash)
+-  macOS (Bash/Zsh)

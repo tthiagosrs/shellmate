@@ -1,6 +1,6 @@
 from google import genai
 
-API_KEY = "AIzaSyDYCeKXgveNZ0FzpC81wX4Rpb4SUmKaRA8"
+API_KEY = "chave da api"
 
 client = genai.Client(api_key=API_KEY)
 
