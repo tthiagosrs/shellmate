@@ -1,4 +1,5 @@
 click
 rich
-google-genai
+langchain
+langchain-google-genai
 psycopg2-binary
