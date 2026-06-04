@@ -1,11 +1,12 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
+import os
 import requests
 import re
 
 
-GEMINI_API_KEY = "geminiapi"
-GROQ_API_KEY = "grokapi"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 llm_gemini = ChatGoogleGenerativeAI(
     model="gemini-flash-latest",
@@ -201,11 +202,44 @@ def chamar_gemini(pedido, so_nome, modo_texto, prompt_template):
         "modo": modo_texto
     })
 
+    raw_content = response.content
+    if isinstance(raw_content, list):
+        raw_content = [p.get("text", "") if isinstance(p, dict) else str(p) for p in raw_content]
+
     if isinstance(response.content, list):
         partes = [p.get("text", "") if isinstance(p, dict) else str(p) for p in response.content]
-        return "".join(partes).strip()
-    return response.content.strip()
+        return {"text": "".join(partes).strip(), "raw": raw_content}
 
+    return {"text": str(response.content).strip(), "raw": raw_content}
+
+
+
+def _parse_groq_response(response):
+    try:
+        data = response.json()
+    except ValueError:
+        return {"text": None, "raw": {"status_code": response.status_code, "body": response.text, "error": "invalid_json"}}
+
+    if response.status_code != 200:
+        return {"text": None, "raw": {"status_code": response.status_code, "body": data}}
+
+    if isinstance(data, dict) and data.get("error") is not None:
+        return {"text": None, "raw": data}
+
+    choices = data.get("choices") if isinstance(data, dict) else None
+    if not choices or not isinstance(choices, list):
+        return {"text": None, "raw": data}
+
+    first_choice = choices[0]
+    message = first_choice.get("message") if isinstance(first_choice, dict) else None
+    if isinstance(message, dict) and message.get("content") is not None:
+        return {"text": str(message["content"]).strip(), "raw": data}
+
+    text = first_choice.get("text") if isinstance(first_choice, dict) else None
+    if text is not None:
+        return {"text": str(text).strip(), "raw": data}
+
+    return {"text": None, "raw": data}
 
 
 def chamar_groq(pedido, so_nome, modo_texto):
@@ -244,11 +278,10 @@ Se o pedido for perigoso ou não fizer sentido, responda apenas: ERRO"""
             json=payload,
             timeout=15
         )
-        data = response.json()
-        return data["choices"][0]["message"]["content"].strip()
+        return _parse_groq_response(response)
     except Exception as e:
         print(f"Erro no Groq: {e}")
-        return None
+        return {"text": None, "raw": {"error": str(e)}}
 
 
 
@@ -288,10 +321,17 @@ Nada mais."""
             json=payload,
             timeout=10
         )
+        if response.status_code != 200:
+            return True
         data = response.json()
-        resposta = data["choices"][0]["message"]["content"].strip().upper()
-        return "SEGURO" in resposta
-    except:
+        if isinstance(data, dict) and data.get("error") is not None:
+            return True
+        choices = data.get("choices") if isinstance(data, dict) else None
+        if not choices or not isinstance(choices, list):
+            return True
+        resposta = choices[0].get("message", {}).get("content", "") if isinstance(choices[0], dict) else ""
+        return "SEGURO" in str(resposta).strip().upper()
+    except Exception:
         return True  
 
 
@@ -331,14 +371,21 @@ def traduzir_comando(pedido, sistema_operacional, modo="tecnico", usar_groq=Fals
 
 
         if usar_groq:
-            comando = chamar_groq(pedido, so_nome, modo_texto)
+            resultado = chamar_groq(pedido, so_nome, modo_texto)
+            comando = resultado.get("text")
+            raw_response = resultado.get("raw")
             ia_usada = "Groq (Llama3)"
         else:
-            comando = chamar_gemini(pedido, so_nome, modo_texto, prompt_template)
+            resultado = chamar_gemini(pedido, so_nome, modo_texto, prompt_template)
+            comando = resultado.get("text")
+            raw_response = resultado.get("raw")
             ia_usada = "Gemini"
 
         if not comando or comando in ("ERRO", "BLOQUEADO"):
-            return {"comando": None, "erro": comando or "Erro ao obter resposta.", "ia_usada": ia_usada}
+            error_message = comando if comando else None
+            if not error_message and isinstance(raw_response, dict):
+                error_message = raw_response.get("error") or raw_response.get("detail")
+            return {"comando": None, "erro": error_message or "Erro ao obter resposta.", "ia_usada": ia_usada, "raw": raw_response}
 
         comando = comando.replace("```bash", "").replace("```powershell", "")
         comando = comando.replace("```shell", "").replace("```", "").strip()
@@ -347,7 +394,7 @@ def traduzir_comando(pedido, sistema_operacional, modo="tecnico", usar_groq=Fals
             return {"comando": None, "erro": "BLOQUEADO: O comando gerado foi considerado perigoso.", "ia_usada": ia_usada}
 
 
-        if not usar_groq and GROQ_API_KEY != "SUA_KEY_GROQ_AQUI":
+        if not usar_groq and GROQ_API_KEY:
             seguro = validar_com_segunda_ia(comando, pedido, so_nome)
             if not seguro:
                 return {"comando": None, "erro": "BLOQUEADO: Segunda IA considerou o comando perigoso.", "ia_usada": "Gemini + Groq"}
@@ -357,7 +404,7 @@ def traduzir_comando(pedido, sistema_operacional, modo="tecnico", usar_groq=Fals
         if modo in ("professor", "detalhado"):
             explicacao = gerar_explicacao(comando, pedido, so_nome, modo_texto, usar_groq)
 
-        return {"comando": comando, "explicacao": explicacao, "ia_usada": ia_usada}
+        return {"comando": comando, "explicacao": explicacao, "ia_usada": ia_usada, "raw": raw_response}
 
     except Exception as e:
         return {"comando": None, "erro": f"Erro na API: {e}", "ia_usada": "erro"}

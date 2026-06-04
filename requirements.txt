@@ -5,3 +5,5 @@ langchain-core
 langchain-google-genai
 psycopg2-binary
 requests
+fastapi
+uvicorn[standard]

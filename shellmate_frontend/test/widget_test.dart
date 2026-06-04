@@ -1,0 +1,18 @@
+// This is a basic Flutter widget test.
+//
+// To perform an interaction with a widget in your test, use the WidgetTester
+// utility in the flutter_test package. For example, you can send tap and scroll
+// gestures. You can also use WidgetTester to find child widgets in the widget
+// tree, read text, and verify that the values of widget properties are correct.
+
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:shellmate_frontend/app/shellmate_app.dart';
+
+void main() {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Build the Shellmate chat app and verify initial assistant text.
+    await tester.pumpWidget(const ShellmateApp());
+    expect(find.textContaining('Olá! Eu sou o Shellmate'), findsOneWidget);
+  });
+}
