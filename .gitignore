@@ -1,152 +1,37 @@
-# Byte-compiled / optimized / DLL files
+# ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[codz]
 *$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
 .Python
-build/
-develop-eggs/
+/build/
 dist/
-downloads/
-eggs/
-.eggs/    
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
-
-# PyInstaller
-#   Usually these files are written by a python script from a template
-#   before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
 *.spec
-
-# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
-# Unit test / coverage reports
 htmlcov/
 .tox/
 .nox/
 .coverage
 .coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py.cover
-.hypothesis/
 .pytest_cache/
 cover/
-
-# Translations
 *.mo
 *.pot
-
-# Django stuff:
-*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# Flask stuff:
 instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
 docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
 .ipynb_checkpoints
-
-# IPython
 profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-# Pipfile.lock
-
-# UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-# uv.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-# poetry.lock
-# poetry.toml
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#   pdm recommends including project-wide configuration in pdm.toml, but excluding .pdm-python.
-#   https://pdm-project.org/en/latest/usage/project/#working-with-version-control
-# pdm.lock
-# pdm.toml
 .pdm-python
 .pdm-build/
-
-# pixi
-#   Similar to Pipfile.lock, it is generally recommended to include pixi.lock in version control.
-# pixi.lock
-#   Pixi creates a virtual environment in the .pixi directory, just like venv module creates one
-#   in the .venv directory. It is recommended not to include this directory in version control.
 .pixi
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# Redis
-*.rdb
-*.aof
-*.pid
-
-# RabbitMQ
-mnesia/
-rabbitmq/
-rabbitmq-data/
-
-# ActiveMQ
-activemq-data/
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
 .env
 .envrc
 .venv
@@ -155,63 +40,110 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
 /site
-
-# mypy
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
 .pyre/
-
-# pytype static type analyzer
 .pytype/
-
-# Cython debug symbols
 cython_debug/
-
-# PyCharm
-#   JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#   be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#   and can be added to the global gitignore or merged into this file.  For a more nuclear
-#   option (not recommended) you can uncomment the following to ignore the entire idea folder.
-# .idea/
-
-# Abstra
-#   Abstra is an AI-powered process automation framework.
-#   Ignore directories containing user credentials, local state, and settings.
-#   Learn more at https://abstra.io/docs
-.abstra/
-
-# Visual Studio Code
-#   Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
-#   that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#   and can be added to the global gitignore or merged into this file. However, if you prefer, 
-#   you could uncomment the following to ignore the entire vscode folder
-# .vscode/
-# Temporary file for partial code execution
+.ruff_cache/
+.pypirc
 tempCodeRunnerFile.py
 
-# Ruff stuff:
-.ruff_cache/
+# ── Flutter / Dart ────────────────────────────────────────────────────────────
+.DS_Store
+.atom/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+*.class
+*.swp
+*.iml
+*.ipr
+*.iws
+.idea/
+app.*.symbols
+app.*.map.json
 
-# PyPI configuration file
-.pypirc
+shellmate_frontend/.dart_tool/
+shellmate_frontend/.flutter-plugins
+shellmate_frontend/.flutter-plugins-dependencies
+shellmate_frontend/.pub-cache/
+shellmate_frontend/.pub/
+shellmate_frontend/.build/
+shellmate_frontend/.buildlog/
+shellmate_frontend/build/
+shellmate_frontend/coverage/
+shellmate_frontend/**/doc/api/
+shellmate_frontend/**/ios/Flutter/.last_build_id
 
-# Marimo
-marimo/_static/
-marimo/_lsp/
-__marimo__/
+# ── Flutter: Android ──────────────────────────────────────────────────────────
+shellmate_frontend/android/gradle-wrapper.jar
+shellmate_frontend/android/.gradle/
+shellmate_frontend/android/captures/
+shellmate_frontend/android/gradlew
+shellmate_frontend/android/gradlew.bat
+shellmate_frontend/android/local.properties
+shellmate_frontend/android/**/GeneratedPluginRegistrant.java
+shellmate_frontend/android/.cxx/
+shellmate_frontend/android/key.properties
+shellmate_frontend/android/**/*.keystore
+shellmate_frontend/android/**/*.jks
+shellmate_frontend/android/app/debug
+shellmate_frontend/android/app/profile
+shellmate_frontend/android/app/release
 
-# Streamlit
-.streamlit/secrets.toml
+# ── Flutter: iOS ──────────────────────────────────────────────────────────────
+shellmate_frontend/ios/**/dgph
+shellmate_frontend/ios/**/*.mode1v3
+shellmate_frontend/ios/**/*.mode2v3
+shellmate_frontend/ios/**/*.moved-aside
+shellmate_frontend/ios/**/*.pbxuser
+shellmate_frontend/ios/**/*.perspectivev3
+shellmate_frontend/ios/**/*sync/
+shellmate_frontend/ios/**/.sconsign.dblite
+shellmate_frontend/ios/**/.tags*
+shellmate_frontend/ios/**/.vagrant/
+shellmate_frontend/ios/**/DerivedData/
+shellmate_frontend/ios/**/Pods/
+shellmate_frontend/ios/**/.symlinks/
+shellmate_frontend/ios/**/xcuserdata/
+shellmate_frontend/ios/**/.generated/
+shellmate_frontend/ios/Icon?
+shellmate_frontend/ios/profile
+shellmate_frontend/ios/Flutter/App.framework
+shellmate_frontend/ios/Flutter/Flutter.framework
+shellmate_frontend/ios/Flutter/Flutter.podspec
+shellmate_frontend/ios/Flutter/Generated.xcconfig
+shellmate_frontend/ios/Flutter/ephemeral/
+shellmate_frontend/ios/Flutter/app.flx
+shellmate_frontend/ios/Flutter/app.zip
+shellmate_frontend/ios/Flutter/flutter_assets/
+shellmate_frontend/ios/Flutter/flutter_export_environment.sh
+shellmate_frontend/ios/ServiceDefinitions.json
+shellmate_frontend/ios/Runner/GeneratedPluginRegistrant.*
+!shellmate_frontend/ios/**/default.mode1v3
+!shellmate_frontend/ios/**/default.mode2v3
+!shellmate_frontend/ios/**/default.pbxuser
+!shellmate_frontend/ios/**/default.perspectivev3
+
+# ── Flutter: macOS ────────────────────────────────────────────────────────────
+shellmate_frontend/macos/**/dgph
+shellmate_frontend/macos/**/Flutter/ephemeral/
+shellmate_frontend/macos/**/Pods/
+shellmate_frontend/macos/**/xcuserdata/
+
+# ── Flutter: Linux ────────────────────────────────────────────────────────────
+shellmate_frontend/linux/flutter/ephemeral/
+
+# ── Flutter: Windows ──────────────────────────────────────────────────────────
+shellmate_frontend/windows/flutter/ephemeral/
+shellmate_frontend/windows/**/*.suo
+shellmate_frontend/windows/**/*.user
+shellmate_frontend/windows/**/*.userosscache
+shellmate_frontend/windows/**/*.sln.docstates
+shellmate_frontend/windows/**/x64/
+shellmate_frontend/windows/**/x86/
+shellmate_frontend/windows/**/*.[Cc]ache

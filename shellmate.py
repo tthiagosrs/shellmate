@@ -104,7 +104,7 @@ def processar_pedido(texto):
     # Verifica cache
     cache = db.buscar_cache(texto, SISTEMA)
     if cache:
-        comando = cache[2]
+        comando = cache['comando_gerado']
         console.print(
             Panel(
                 f"[bold green]{comando}[/bold green]\n\n[dim](cache - já pedido antes)[/dim]",
@@ -197,10 +197,10 @@ def historico(limite):
 
     for reg in registros:
         tabela.add_row(
-            str(reg[6])[:16],
-            reg[1],
-            reg[2],
-            "✓" if reg[4] else "✗"
+            str(reg['data_hora'])[:16],
+            reg['input_usuario'],
+            reg['comando_gerado'],
+            "✓" if reg['executado'] else "✗"
         )
 
     console.print()
@@ -223,7 +223,7 @@ def buscar(termo):
     tabela.add_column("Comando", style="green")
 
     for reg in registros:
-        tabela.add_row(reg[1], reg[2])
+        tabela.add_row(reg['input_usuario'], reg['comando_gerado'])
 
     console.print()
     console.print(tabela)

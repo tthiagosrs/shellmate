@@ -1,11 +1,12 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
+import os
 import requests
 import re
 
 
-GEMINI_API_KEY = "geminiapikey"
-GROQ_API_KEY = "groqapikey"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 llm_gemini = ChatGoogleGenerativeAI(
     model="gemini-flash-latest",
@@ -393,7 +394,7 @@ def traduzir_comando(pedido, sistema_operacional, modo="tecnico", usar_groq=Fals
             return {"comando": None, "erro": "BLOQUEADO: O comando gerado foi considerado perigoso.", "ia_usada": ia_usada}
 
 
-        if not usar_groq and GROQ_API_KEY != "SUA_KEY_GROQ_AQUI":
+        if not usar_groq and GROQ_API_KEY:
             seguro = validar_com_segunda_ia(comando, pedido, so_nome)
             if not seguro:
                 return {"comando": None, "erro": "BLOQUEADO: Segunda IA considerou o comando perigoso.", "ia_usada": "Gemini + Groq"}
